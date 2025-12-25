@@ -1,0 +1,23 @@
+services:
+  data_collector:
+    build: .
+    image: abdallahamrr/os_project_monitor:latest
+    container_name: system_monitor_collector
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./logs:/app/logs
+      - /proc:/host-proc:ro
+      - /:/host-root:ro
+      - /mnt/d/OS_Project/collector:/app/collector
+    command: bash -c "chmod +x /app/collector/*.sh && while true; do /app/collector/system_collector.sh; sleep 3; done"
+  web_server:
+    image: python:3.12-slim
+    container_name: system_monitor_web
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/app/logs
+    command: python3 -m http.server 8080 --directory /app/logs
