@@ -20,6 +20,7 @@ docker run -d \
   -v $(pwd)/logs:/app/logs \
   --add-host=host.docker.internal:host-gateway \
   abdallahamrr/os_system_monitor:latest
+
 📊 Features
 Live Dashboard: Auto-refreshing HTML interface with dynamic, color-coded health bars.
 
